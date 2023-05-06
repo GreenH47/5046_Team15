@@ -1,48 +1,57 @@
 package com.example.vitality;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
+
+import com.example.vitality.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
-    private Button dietLogButton, workoutLogButton, dashboardButton;
+
+    private ActivityMainBinding binding;
+    private AppBarConfiguration mAppBarConfiguration;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
-        // Find the three buttons on the home screen
-        dietLogButton = findViewById(R.id.dietLogButton);
-        workoutLogButton = findViewById(R.id.workoutLogButton);
-        dashboardButton = findViewById(R.id.dashboardButton);
+        // Inflate the layout using view binding
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        View view = binding.getRoot();
+        setContentView(view);
 
-        // Set onClickListeners for all three buttons
-        dietLogButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, DietLogActivity.class);
-                startActivity(intent);
-            }
-        });
+        // Set the toolbar as the action bar
+        setSupportActionBar(binding.appBar.toolbar);
 
-        workoutLogButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, WorkoutLogActivity.class);
-                startActivity(intent);
-            }
-        });
+        // Set up the navigation drawer
+        mAppBarConfiguration = new AppBarConfiguration.Builder(
+                R.id.nav_home_fragment,
+                R.id.nav_workout_fragment,
+                R.id.nav_diet_fragment,
+                R.id.nav_dashboard_fragment
+                )
+                // To display the Navigation button as a drawer symbol,
+                // not being shown as an Up button
+                .setOpenableLayout(binding.drawerLayout)
+                .build();
 
-        dashboardButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, DashboardActivity.class);
-                startActivity(intent);
-            }
-        });
+        // Get the NavController from the NavHostFragment
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        NavHostFragment navHostFragment = (NavHostFragment)
+                fragmentManager.findFragmentById(R.id.nav_host_fragment);
+        NavController navController = navHostFragment.getNavController();
+
+        // Set up the NavigationView with the NavController
+        NavigationUI.setupWithNavController(binding.navView, navController);
+
+        // Set up the Toolbar with the NavController and AppBarConfiguration
+        NavigationUI.setupWithNavController(binding.appBar.toolbar, navController,
+                mAppBarConfiguration);
     }
 }

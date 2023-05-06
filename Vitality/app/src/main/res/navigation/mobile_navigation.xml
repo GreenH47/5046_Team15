@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@id/nav_home_fragment">
+    <fragment
+        android:id="@+id/nav_diet_fragment"
+        android:name="com.example.vitality.fragment.DietlogFragment"
+        android:label="Diet Log" />
+    <fragment
+        android:id="@+id/nav_home_fragment"
+        android:name="com.example.vitality.fragment.HomeFragment"
+        android:label="Home" />
+    <fragment
+        android:id="@+id/nav_workout_fragment"
+        android:name="com.example.vitality.fragment.WorkoutlogFragment"
+        android:label="Workout log" />
+
+    <fragment
+        android:id="@+id/nav_dashboard_fragment"
+        android:name="com.example.vitality.fragment.DashboardFragment"
+        android:label="dashboard" />
+</navigation>

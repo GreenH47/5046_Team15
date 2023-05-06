@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <!-- First menu item, which links to the Home Fragment -->
+    <item
+        android:id="@+id/nav_home_fragment"
+        android:title="Home" />
+
+    <!-- Second menu item, which links to the Add Fragment -->
+    <item
+        android:id="@+id/nav_workout_fragment"
+        android:title="Workout Log" />
+
+    <!-- Third menu item, which links to the View Fragment -->
+    <item
+        android:id="@+id/nav_diet_fragment"
+        android:title="Diet Log" />
+
+    <item
+        android:id="@+id/nav_dashboard_fragment"
+        android:title="Dashboard" />
+</menu>
