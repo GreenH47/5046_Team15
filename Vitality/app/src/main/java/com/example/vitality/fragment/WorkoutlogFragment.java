@@ -8,6 +8,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import com.example.vitality.databinding.ActivityDashboardBinding;
 import com.example.vitality.databinding.ActivityWorkoutLogBinding;
@@ -30,6 +31,15 @@ public class WorkoutlogFragment extends Fragment{
                 binding.textMessage.setText(s);
             }
         });
+
+        //return to main page
+        binding.returnButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(view).navigateUp(); // Navigate up to the previous destination
+            }
+        });
+
         return view;
     }
     @Override

@@ -20,4 +20,22 @@
         android:id="@+id/nav_dashboard_fragment"
         android:name="com.example.vitality.fragment.DashboardFragment"
         android:label="dashboard" />
+
+    <!--to diet log page-->
+    <action
+        android:id="@+id/action_homeFragment_to_dietlogFragment"
+        app:destination="@+id/nav_diet_fragment" />
+
+    <!--to dashboard page-->
+    <action
+        android:id="@+id/action_homeFragment_to_dashboardFragment"
+        app:destination="@+id/nav_dashboard_fragment" />
+
+    <!--to workoutlog page-->
+    <action
+        android:id="@+id/action_homeFragment_to_workoutlogFragment"
+        app:destination="@+id/nav_workout_fragment" />
+
+
+
 </navigation>

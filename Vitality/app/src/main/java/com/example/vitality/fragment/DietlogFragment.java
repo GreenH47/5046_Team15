@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import com.example.vitality.databinding.ActivityDietLogBinding;
 import com.example.vitality.viewmodel.SharedViewModel;
@@ -39,6 +40,17 @@ public class DietlogFragment extends Fragment {
                 addBinding.editText.setText("");
             }
         });
+
+        //return to main page
+
+        addBinding.returnButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(view).navigateUp(); // Navigate up to the previous destination
+            }
+        });
+
+
         return view;
     }
     @Override
