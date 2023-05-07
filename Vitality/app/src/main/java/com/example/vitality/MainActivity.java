@@ -10,12 +10,14 @@ import androidx.navigation.ui.NavigationUI;
 import android.os.Bundle;
 import android.view.View;
 
+import com.example.vitality.databinding.ActivityDrawerBinding;
 import com.example.vitality.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
     private AppBarConfiguration mAppBarConfiguration;
+    private ActivityDrawerBinding drawerBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(view);
 
         // Set the toolbar as the action bar
-        setSupportActionBar(binding.appBar.toolbar);
+        //setSupportActionBar(binding.appBar.toolbar);
 
         // Set up the navigation drawer
         mAppBarConfiguration = new AppBarConfiguration.Builder(

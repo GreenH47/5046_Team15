@@ -4,12 +4,73 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-    <EditText
-        android:id="@+id/editText"
+
+    <!-- Add the TextView for the title -->
+    <TextView
+        android:id="@+id/titleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Food recording today"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="16dp"
+        />
+
+    <!-- cake entry -->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter a message"
-        />
+        android:orientation="horizontal"
+        >
+
+        <EditText
+            android:id="@+id/editText"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:hint="Enter a message"
+            />
+
+        <!-- Add the notice text view -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cake eating (2000KJ)"
+            android:textSize="18sp"
+            android:textColor="#999"
+            android:padding="8dp"
+            />
+
+    </LinearLayout>
+
+    <!-- cake entry -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+
+        <EditText
+            android:id="@+id/editText2"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:hint="Enter a message"
+            />
+
+        <!-- Add the notice text view -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="beef eating (3000KJ)"
+            android:textSize="18sp"
+            android:textColor="#999"
+            android:padding="8dp"
+            />
+
+    </LinearLayout>
+
+
     <Button
         android:id="@+id/addButton"
         android:layout_width="match_parent"

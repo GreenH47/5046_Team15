@@ -1,21 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.drawerlayout.widget.DrawerLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/drawer_layout"
+    android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
-    <include
-        layout="@layout/app_bar_main"
-        android:id="@+id/app_bar"
+    android:orientation="vertical">
+
+    <androidx.drawerlayout.widget.DrawerLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-    <com.google.android.material.navigation.NavigationView
-        android:id="@+id/nav_view"
-        android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_gravity="start"
-        app:headerLayout="@layout/nav_header_main"
-        app:menu="@menu/navigation_menu" />
-</androidx.drawerlayout.widget.DrawerLayout>
+        android:fitsSystemWindows="true">
+        <include
+            layout="@layout/app_bar_main"
+            android:id="@+id/app_bar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+        <com.google.android.material.navigation.NavigationView
+            android:id="@+id/nav_view"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            app:headerLayout="@layout/nav_header_main"
+            app:menu="@menu/navigation_menu" />
+    </androidx.drawerlayout.widget.DrawerLayout>
+
+
+    <!-- First vertical linear layout containing two edit texts -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+
+        <!-- Email EditText with hint and input type for email address -->
+        <EditText
+            android:id="@+id/emailEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter an email"
+            android:inputType="textEmailAddress"
+            />
+
+        <!-- Password EditText with hint and input type for password -->
+        <EditText
+            android:id="@+id/passwordEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter a password"
+            android:inputType="textPassword"
+            />
+
+    </LinearLayout>
+
+    <!-- Second horizontal linear layout containing two buttons with equal width -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal">
+
+        <!-- Signin button with text and 50% layout_weight -->
+        <Button
+            android:id="@+id/signinButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Signin"
+            android:layout_weight="0.5"
+            />
+
+        <!-- Signup button with text and 50% layout_weight -->
+        <Button
+            android:id="@+id/signupButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Signup"
+            android:layout_weight="0.5"
+            />
+
+    </LinearLayout>
+
+</LinearLayout>
+
