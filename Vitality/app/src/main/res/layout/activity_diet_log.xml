@@ -109,6 +109,12 @@
         android:text="Add to Database" />
 
     <Button
+        android:id="@+id/returnButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Return to Home Screen"/>
+
+    <Button
         android:id="@+id/clearButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -125,7 +131,7 @@
         android:id="@+id/deleteButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Delete Data" />
+        android:text="Delete all Data" />
 
     <!-- TextView to display deleted data information -->
     <TextView
@@ -133,18 +139,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <!-- Button to update data in Database-->
-    <Button
-        android:id="@+id/updateButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Update Data" />
 
-    <!-- TextView to display updated data information -->
-    <TextView
-        android:id="@+id/textView_update"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
 
     <!-- TextView to display read data information from database -->
     <TextView
@@ -153,11 +148,7 @@
         android:layout_height="wrap_content"
         android:background="@color/white" />
 
-    <Button
-        android:id="@+id/returnButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Return to Home Screen"/>
+
 
 
 </LinearLayout>
