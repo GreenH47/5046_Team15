@@ -12,26 +12,24 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import com.example.vitality.databinding.ActivityDashboardBinding;
+import com.example.vitality.databinding.ActivityMapBinding;
 import com.example.vitality.databinding.ActivityWorkoutLogBinding;
 import com.example.vitality.viewmodel.SharedViewModel;
-public class MapFragment  extends Fragment{
+public class MapFragment extends Fragment{
 
-    private ActivityWorkoutLogBinding binding;
+    //private ActivityWorkoutLogBinding binding;
+
+    private ActivityMapBinding binding;
     public MapFragment(){}
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 // Inflate the View for this fragment using the binding
-        binding = ActivityWorkoutLogBinding.inflate(inflater, container, false);
+        binding = ActivityMapBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
         SharedViewModel model = new
                 ViewModelProvider(requireActivity()).get(SharedViewModel.class);
-        model.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                binding.textMessage.setText(s);
-            }
-        });
+
 
         //return to main page
         binding.returnButton.setOnClickListener(new View.OnClickListener() {

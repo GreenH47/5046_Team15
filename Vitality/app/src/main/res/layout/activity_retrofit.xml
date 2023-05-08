@@ -18,4 +18,24 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Return to Home Screen"/>
+
+    <!-- EditText view for the search query -->
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <!-- Button for triggering the search -->
+    <Button
+        android:id="@+id/btnSearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Search" />
+
+    <!-- TextView for displaying the search results -->
+    <TextView
+        android:id="@+id/tvResult"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
 </LinearLayout>

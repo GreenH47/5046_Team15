@@ -90,23 +90,20 @@ public class ReportFragment extends Fragment{
                 binding.barChart.setData(barData);
 
 
-                barData.setBarWidth(1.0f);
-                binding.barChart.setVisibility(View.VISIBLE);
-                binding.barChart.animateY(4000);
-//description will be displayed as "Description Label" if not provided
-                Description description = new Description();
-                description.setText("Daily Steps");
-                binding.barChart.setDescription(description);
-//refresh the chart
-                binding.barChart.invalidate();
-
+//                barData.setBarWidth(1.0f);
+//                binding.barChart.setVisibility(View.VISIBLE);
+//                binding.barChart.animateY(4000);
+//                //description will be displayed as "Description Label" if not provided
+//                Description description = new Description();
+//                description.setText("Daily Steps");
+//                binding.barChart.setDescription(description);
+//                //refresh the chart
+//                binding.barChart.invalidate();
 
             }
         });
 
-
-
-
+        
         //return to main page
         binding.returnButton.setOnClickListener(new View.OnClickListener() {
             @Override
