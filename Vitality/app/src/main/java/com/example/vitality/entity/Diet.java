@@ -30,6 +30,21 @@ public class Diet {
     @NonNull
     public int beefNum;
 
+    //get the beefNum
+    public int getBeefNum() {
+        return beefNum;
+    }
+
+    //get the cakeNum
+    public int getCakeNum() {
+        return cakeNum;
+    }
+
+    //get the dayNum
+    public int getDayNum() {
+        return dayNum;
+    }
+
     //Constructor to initialize the diet object
     // with day number, cake number and beef number
     public Diet(@NonNull int dayNum, @NonNull int cakeNum, @NonNull int beefNum) {

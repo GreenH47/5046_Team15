@@ -40,7 +40,7 @@
     <!--to report page-->
     <fragment
         android:id="@+id/nav_report_fragment"
-        android:name="com.example.vitality.fragment.DashboardFragment"
+        android:name="com.example.vitality.fragment.ReportFragment"
         android:label="dashboard" />
 
 
