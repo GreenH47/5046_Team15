@@ -36,26 +36,33 @@ public class DietlogFragment extends Fragment {
 //                if (!message.isEmpty() ) {
 //                    model.setMessage(message);
 //                }
-                String cakeText = addBinding.editText.getText().toString();
-                String beefText = addBinding.editText2.getText().toString();
-                int cake = 0, beef = 0;
+                String dayText = addBinding.editText1.getText().toString();
+                String cakeText = addBinding.editText2.getText().toString();
+                String beefText = addBinding.editText3.getText().toString();
+                int day=0, cake = 0, beef = 0;
                 try {
+                    if (!dayText.equals("")) {
+                        day = Integer.parseInt(dayText);
+                    }
                     if (!cakeText.equals("")) {
                         cake = Integer.parseInt(cakeText);
                     }
                     if (!beefText.equals("")) {
                         beef = Integer.parseInt(beefText);
                     }
-                    int cakeEnergy = cake * 2000;
-                    int beefEnergy = beef * 2000;
-                    String cakeMessage = "Cake energy today: " + cakeEnergy + " KJ";
-                    String beefMessage = "Beef energy today: " + beefEnergy + " KJ";
-                    String combinedMessage = cakeMessage + "\n" + beefMessage;
-                    model.setMessage(combinedMessage);
+
+
                 } catch (NumberFormatException e) {
                     // Display error message if input is not an integer
                     Toast.makeText(getContext(), "Input must be an integer", Toast.LENGTH_SHORT).show();
                 }
+                int cakeEnergy = cake * 2000;
+                int beefEnergy = beef * 2000;
+                String daymessage = "Day number: " + day;
+                String cakeMessage = "Cake energy today: " + cakeEnergy + " KJ";
+                String beefMessage = "Beef energy today: " + beefEnergy + " KJ";
+                String combinedMessage = daymessage + "\n" + cakeMessage + "\n" + beefMessage;
+                model.setMessage(combinedMessage);
             }
         });
 
@@ -63,8 +70,9 @@ public class DietlogFragment extends Fragment {
         addBinding.clearButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addBinding.editText.setText("");
+                addBinding.editText1.setText("");
                 addBinding.editText2.setText("");
+                addBinding.editText3.setText("");
             }
         });
 

@@ -16,7 +16,7 @@
         android:layout_marginBottom="16dp"
         />
 
-    <!-- cake entry -->
+    <!-- day entry -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -24,18 +24,19 @@
         >
 
         <EditText
-            android:id="@+id/editText"
+            android:id="@+id/editText1"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:hint="Enter a message"
+            android:hint="Enter day number"
+            android:inputType="number"
             />
 
         <!-- Add the notice text view -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Cake eating (2000KJ)"
+            android:text="Day number"
             android:textSize="18sp"
             android:textColor="#999"
             android:padding="8dp"
@@ -55,7 +56,36 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:hint="Enter a message"
+            android:hint="Enter cake number"
+            android:inputType="number"
+            />
+
+        <!-- Add the notice text view -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cake eating (2000KJ)"
+            android:textSize="18sp"
+            android:textColor="#999"
+            android:padding="8dp"
+            />
+
+    </LinearLayout>
+
+    <!-- beef entry -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+
+        <EditText
+            android:id="@+id/editText3"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:hint="Enter beef number"
+            android:inputType="number"
             />
 
         <!-- Add the notice text view -->
@@ -71,20 +101,63 @@
     </LinearLayout>
 
 
+    <!-- Button to add data to Database-->
     <Button
         android:id="@+id/addButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Add"
-        />
+        android:text="Add to Database" />
+
     <Button
         android:id="@+id/clearButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Clear" />
+
+    <!-- TextView to display added data -->
+    <TextView
+        android:id="@+id/textView_add"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <!-- Button to delete data from Database-->
+    <Button
+        android:id="@+id/deleteButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Delete Data" />
+
+    <!-- TextView to display deleted data information -->
+    <TextView
+        android:id="@+id/textView_delete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <!-- Button to update data in Database-->
+    <Button
+        android:id="@+id/updateButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Update Data" />
+
+    <!-- TextView to display updated data information -->
+    <TextView
+        android:id="@+id/textView_update"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <!-- TextView to display read data information from database -->
+    <TextView
+        android:id="@+id/textView_read"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white" />
+
     <Button
         android:id="@+id/returnButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Return to Home Screen"/>
+
+
 </LinearLayout>
