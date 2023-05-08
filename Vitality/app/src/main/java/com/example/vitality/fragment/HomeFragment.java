@@ -58,6 +58,33 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        // Add a click listener to the reportButton to navigate to the reportFragment
+        Button reportButton = view.findViewById(R.id.reportButton);
+        reportButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navController.navigate(R.id.action_homeFragment_to_reportFragment);
+            }
+        });
+
+        // Add a click listener to the mapButton to navigate to the mapFragment
+        Button mapButton = view.findViewById(R.id.mapButton);
+        mapButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navController.navigate(R.id.action_homeFragment_to_mapFragment);
+            }
+        });
+
+        // Add a click listener to the retrofitButton to navigate to the retrofitFragment
+        Button retrofitButton = view.findViewById(R.id.retrofitButton);
+        retrofitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navController.navigate(R.id.action_homeFragment_to_retrofitFragment);
+            }
+        });
+
 
         return view;
     }

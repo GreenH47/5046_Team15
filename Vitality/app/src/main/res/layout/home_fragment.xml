@@ -37,4 +37,32 @@
         android:layout_below="@id/dietLogButton"
         android:layout_alignStart="@id/dietLogButton"
         android:layout_marginTop="20dp"/>
+
+    <Button
+        android:id="@+id/reportButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Graph Report"
+        android:layout_below="@id/workoutLogButton"
+        android:layout_alignStart="@id/dietLogButton"
+        android:layout_marginTop="20dp"/>
+
+    <Button
+        android:id="@+id/mapButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Map"
+        android:layout_below="@id/reportButton"
+        android:layout_alignStart="@id/dietLogButton"
+        android:layout_marginTop="20dp"/>
+
+    <Button
+        android:id="@+id/retrofitButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="retrofit"
+        android:layout_below="@id/mapButton"
+        android:layout_alignStart="@id/dietLogButton"
+        android:layout_marginTop="20dp"/>
+
 </LinearLayout>

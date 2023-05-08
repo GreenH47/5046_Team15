@@ -37,5 +37,34 @@
         app:destination="@+id/nav_workout_fragment" />
 
 
+    <!--to report page-->
+    <fragment
+        android:id="@+id/nav_report_fragment"
+        android:name="com.example.vitality.fragment.DashboardFragment"
+        android:label="dashboard" />
+
+
+    <action
+        android:id="@+id/action_homeFragment_to_reportFragment"
+        app:destination="@+id/nav_report_fragment" />
+
+
+    <!--to map page-->
+    <fragment
+        android:id="@+id/nav_map_fragment"
+        android:name="com.example.vitality.fragment.MapFragment"
+        android:label="dashboard" />
+    <action
+        android:id="@+id/action_homeFragment_to_mapFragment"
+        app:destination="@+id/nav_map_fragment" />
+
+    <!--to retrofit page-->
+    <fragment
+        android:id="@+id/nav_retrofit_fragment"
+        android:name="com.example.vitality.fragment.RetrofitFragment"
+        android:label="dashboard" />
+    <action
+        android:id="@+id/action_homeFragment_to_retrofitFragment"
+        app:destination="@+id/nav_retrofit_fragment" />
 
 </navigation>
