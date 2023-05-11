@@ -17,81 +17,130 @@ import java.net.URL;
 import java.net.URLDecoder;
 import java.util.List;
 
+import com.google.gson.annotations.SerializedName;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.GET;
+import retrofit2.http.Query;
+
+
 public class Weather {
+    // Define our API base URL, API key, and latitude and longitude parameters
+    private static final String API_BASE_URL = "https://api.weatherbit.io/v2.0/";
+    private static final String API_KEY = "98843ec000cb4eeca13534381d625f4e";
+    private static final String API_LATITUDE = "-37.8136";
+    private static final String API_LONGITUDE = "144.9631";
+
+    // Define our Weather data model with the required data fields
     private String city;
     private double temperature;
-    private static final String API_URL =
-            "https://api.weatherbit.io/v2.0/current?lat=-37.8136&lon=144.9631&key=98843ec000cb4eeca13534381d625f4e";
 
+    // Define a constructor for creating Weather objects manually
     private Weather(String city, double temperature) {
         this.city = city;
         this.temperature = temperature;
     }
 
+    // Define a method for fetching weather data from our API and notifying a callback with the result
     public static void fetchWeather(final OnWeatherFetchCompletedListener listener) {
-        new Thread(new Runnable() {
+        // Use Retrofit to create an implementation of our weather service interface
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(API_BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        WeatherService service = retrofit.create(WeatherService.class);
+
+        // Call the "getCurrentWeather" endpoint with our API key and location parameters
+        Call<WeatherResponse> call = service.getCurrentWeather(API_KEY, API_LATITUDE, API_LONGITUDE);
+
+        // Handle the API response with a callback
+        call.enqueue(new Callback<WeatherResponse>() {
             @Override
-            public void run() {
-                String json = null;
-                try {
-                    URL url = new URL(API_URL);
-                    HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-                    if (httpURLConnection.getResponseCode() == 200) {
-                        InputStream inputStream = httpURLConnection.getInputStream();
-                        BufferedReader bufferedReader =
-                                new BufferedReader(new InputStreamReader(inputStream));
-                        StringBuilder stringBuilder = new StringBuilder();
-                        String line;
-                        while ((line = bufferedReader.readLine()) != null) {
-                            stringBuilder.append(line);
-                        }
-                        json = stringBuilder.toString();
-                        httpURLConnection.disconnect();
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+            public void onResponse(Call<WeatherResponse> call, Response<WeatherResponse> response) {
+                if (response.isSuccessful()) {
+                    // Extract the City and Temperature values from the API response
+                    WeatherResponse weatherResponse = response.body();
 
-                String city = "", temp = "";
-                try {
-                    if (json != null) {
-                        JSONObject jsonObject = new JSONObject(json);
-                        JSONArray jsonArray = jsonObject.getJSONArray("data");
-                        JSONObject weatherInfo = jsonArray.getJSONObject(0);
-                        city = weatherInfo.getString("city_name");
-                        temp = String.valueOf(weatherInfo.getDouble("temp"));
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                    String city = weatherResponse.getData().get(0).getCityName();
+                    double temperature = weatherResponse.getData().get(0).getTemperature();
 
-                final Weather weather = new Weather(city, Double.parseDouble(temp));
-                listener.onWeatherFetchCompleted(weather);
+                    // Create a new Weather object with the extracted values and pass it to the callback
+                    Weather weather = new Weather(city, temperature);
+                    listener.onWeatherFetchCompleted(weather);
+                } else {
+                    // Handle unsuccessful API response
+                    listener.onWeatherFetchFailed();
+                }
             }
-        }).start();
+
+            @Override
+            public void onFailure(Call<WeatherResponse> call, Throwable t) {
+                // Handle API call failure
+                listener.onWeatherFetchFailed();
+            }
+        });
     }
 
+    // Define an interface that describes the weather API endpoints and required parameters
+    public interface WeatherService {
+        @GET("current")
+        Call<WeatherResponse> getCurrentWeather(@Query("key") String apiKey, @Query("lat") String latitude, @Query("lon") String longitude);
+    }
+
+    // Define a nested class that represents the expected JSON response from the weather API
+    private static class WeatherResponse {
+        @SerializedName("data")
+        private List<Data> data;
+
+        public List<Data> getData() {
+            return data;
+        }
+
+        private static class Data {
+            @SerializedName("city_name")
+            private String cityName;
+            @SerializedName("temp")
+            private double temperature;
+
+            public String getCityName() {
+                return cityName;
+            }
+
+            public double getTemperature() {
+                return temperature;
+            }
+        }
+    }
+
+    // Define a callback interface for handling completed weather fetches
     public interface OnWeatherFetchCompletedListener {
         void onWeatherFetchCompleted(Weather weather);
+        void onWeatherFetchFailed();
     }
 
-    public String getWeatherString() {
-        //String weatherString = "Hello " + city + "! It's " + temperature + " degree outside.";
-
-        String weatherString = "Hello " + city + "! It's " + temperature + " degree outside.";
-        if(weatherString.contains("null"))
-            return "Hello Melbourne! It's " + 27.2 + " degree outside.";
-        else
-            return weatherString;
-        //return weatherString;
-    }
-
+    // Define getter methods for the City and Temperature fields
     public String getCity() {
         return city;
     }
 
     public double getTemperature() {
         return temperature;
+    }
+
+    // Define a method for generating a summary message string for the weather data
+    public String getWeatherString() {
+        String weatherString = String.format("Hello %s! It's %.1f degrees outside.", city, temperature);
+
+        // Handle case where city or temperature data is missing
+        if (weatherString.contains("null")) {
+            return "Weather data is unavailable";
+        } else {
+            return weatherString;
+        }
     }
 }
 

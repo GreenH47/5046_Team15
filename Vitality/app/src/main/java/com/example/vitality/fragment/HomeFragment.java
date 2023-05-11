@@ -125,6 +125,11 @@ public class HomeFragment extends Fragment  implements Weather.OnWeatherFetchCom
     }
 
     @Override
+    public void onWeatherFetchFailed() {
+        // Handle the failed weather fetch (e.g. show an error message, retry the fetch, etc.)
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
         addBinding = null;
