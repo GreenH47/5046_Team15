@@ -34,8 +34,8 @@ public class MainActivity extends AppCompatActivity {
         // Set up the navigation drawer
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_home_fragment,
-                R.id.nav_workout_fragment,
-                R.id.nav_diet_fragment,
+                R.id.nav_exercise_fragment,
+                R.id.nav_food_fragment,
                 R.id.nav_dashboard_fragment
                 )
                 // To display the Navigation button as a drawer symbol,

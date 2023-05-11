@@ -8,6 +8,14 @@
         android:name="com.example.vitality.fragment.DietlogFragment"
         android:label="Diet Log" />
     <fragment
+        android:id="@+id/nav_food_fragment"
+        android:name="com.example.vitality.fragment.FoodFragment"
+        android:label="Food Log" />
+    <fragment
+        android:id="@+id/nav_exercise_fragment"
+        android:name="com.example.vitality.fragment.ExerciseFragment"
+        android:label="Exercise Log" />
+    <fragment
         android:id="@+id/nav_home_fragment"
         android:name="com.example.vitality.fragment.HomeFragment"
         android:label="Home" />
@@ -25,6 +33,13 @@
     <action
         android:id="@+id/action_homeFragment_to_dietlogFragment"
         app:destination="@+id/nav_diet_fragment" />
+
+    <action
+        android:id="@+id/action_homeFragment_to_foodFragment"
+        app:destination="@+id/nav_food_fragment" />
+    <action
+        android:id="@+id/action_homeFragment_to_exerciseFragment"
+        app:destination="@+id/nav_exercise_fragment" />
 
     <!--to dashboard page-->
     <action

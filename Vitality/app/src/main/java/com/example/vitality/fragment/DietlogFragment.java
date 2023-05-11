@@ -7,13 +7,11 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModel;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
-import com.example.vitality.MainActivity;
 import com.example.vitality.databinding.ActivityDietLogBinding;
 import com.example.vitality.entity.Diet;
 import com.example.vitality.viewmodel.DietViewModel;
@@ -27,15 +25,16 @@ public class DietlogFragment extends Fragment {
 
     // ViewModel instance to access the database operations
     private DietViewModel dietViewModel;
-    public DietlogFragment(){}
+
+    public DietlogFragment() {
+    }
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         addBinding = ActivityDietLogBinding.inflate(inflater, container, false);
         View view = addBinding.getRoot();
 
-        SharedViewModel sharemodel = new
-                ViewModelProvider(getActivity()).get(SharedViewModel.class);
+        SharedViewModel sharemodel = new ViewModelProvider(getActivity()).get(SharedViewModel.class);
 
         // Get the ViewModel instance using AndroidViewModelFactory with the Application context
         dietViewModel = ViewModelProvider.AndroidViewModelFactory.getInstance(getActivity().getApplication()).create(DietViewModel.class);
@@ -71,7 +70,7 @@ public class DietlogFragment extends Fragment {
                 String dayText = addBinding.editText1.getText().toString();
                 String cakeText = addBinding.editText2.getText().toString();
                 String beefText = addBinding.editText3.getText().toString();
-                int day=0, cake = 0, beef = 0;
+                int day = 0, cake = 0, beef = 0;
                 try {
                     if (!dayText.equals("")) {
                         day = Integer.parseInt(dayText);
@@ -150,6 +149,7 @@ public class DietlogFragment extends Fragment {
 
         return view;
     }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();

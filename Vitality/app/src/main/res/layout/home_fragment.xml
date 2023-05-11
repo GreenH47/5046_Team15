@@ -17,8 +17,23 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Diet Log"
+        android:visibility="gone"
         android:layout_centerInParent="true"
         android:layout_marginBottom="50dp"/>
+    <Button
+        android:id="@+id/foodButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Food Log"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="20dp"/>
+    <Button
+        android:id="@+id/exerciseButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Exercise Log"
+        android:layout_marginBottom="20dp"
+        android:layout_centerInParent="true"/>
 
     <Button
         android:id="@+id/dashboardButton"
@@ -34,6 +49,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Workout Log"
+        android:visibility="gone"
         android:layout_below="@id/dietLogButton"
         android:layout_alignStart="@id/dietLogButton"
         android:layout_marginTop="20dp"/>
