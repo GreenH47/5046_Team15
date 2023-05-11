@@ -18,10 +18,10 @@ import java.net.URLDecoder;
 import java.util.List;
 
 public class Weather {
-    private static String city;
-    private static double temperature;
+    private String city;
+    private double temperature;
     private static final String API_URL =
-            "https://api.weatherbit.io/v2.0/current?lat=35.7796&lon=-78.6382&key=98843ec000cb4eeca13534381d625f4e";
+            "https://api.weatherbit.io/v2.0/current?lat=-37.8136&lon=144.9631&key=98843ec000cb4eeca13534381d625f4e";
 
     private Weather(String city, double temperature) {
         this.city = city;
@@ -75,10 +75,12 @@ public class Weather {
         void onWeatherFetchCompleted(Weather weather);
     }
 
-    public static String getWeatherString() {
+    public String getWeatherString() {
+        //String weatherString = "Hello " + city + "! It's " + temperature + " degree outside.";
+
         String weatherString = "Hello " + city + "! It's " + temperature + " degree outside.";
         if(weatherString.contains("null"))
-            return "Hello Melbourne! It's " + 17.2 + " degree outside.";
+            return "Hello Melbourne! It's " + 27.2 + " degree outside.";
         else
             return weatherString;
         //return weatherString;
