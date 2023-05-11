@@ -10,13 +10,13 @@
 
     <!-- Second menu item, which links to the Add Fragment -->
     <item
-        android:id="@+id/nav_workout_fragment"
-        android:title="Workout Log" />
+        android:id="@+id/nav_exercise_fragment"
+        android:title="Exercise Log" />
 
     <!-- Third menu item, which links to the View Fragment -->
     <item
-        android:id="@+id/nav_diet_fragment"
-        android:title="Diet Log" />
+        android:id="@+id/nav_food_fragment"
+        android:title="Food Log" />
 
     <item
         android:id="@+id/nav_dashboard_fragment"

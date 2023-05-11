@@ -40,6 +40,21 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        Button foodButton = view.findViewById(R.id.foodButton);
+        foodButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navController.navigate(R.id.action_homeFragment_to_foodFragment);
+            }
+        });
+        Button exerciseButton = view.findViewById(R.id.exerciseButton);
+        exerciseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navController.navigate(R.id.action_homeFragment_to_exerciseFragment);
+            }
+        });
+
         // Add a click listener to the dashboardButton to navigate to the DashboardFragment
         Button dashboardButton = view.findViewById(R.id.dashboardButton);
         dashboardButton.setOnClickListener(new View.OnClickListener() {

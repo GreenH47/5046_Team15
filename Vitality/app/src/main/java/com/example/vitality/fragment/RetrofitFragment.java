@@ -31,8 +31,8 @@ import retrofit2.Response;
 public class RetrofitFragment  extends Fragment{
 
     private ActivityRetrofitBinding binding;
-    private static final String API_KEY = "AIzaSyBcDYlzURKGWcyn6xilXsMRzYpG7yonPO8";
-    private static final String SEARCH_ID_cx = "74657bc7963a54d15";
+    private static final String API_KEY = "";
+    private static final String SEARCH_ID_cx = "";
     private String keyword;
 
     private RetrofitInterface retrofitInterface;
