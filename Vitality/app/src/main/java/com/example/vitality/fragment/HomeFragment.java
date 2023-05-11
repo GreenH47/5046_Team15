@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
@@ -12,9 +13,10 @@ import androidx.navigation.Navigation;
 
 import com.example.vitality.R;
 import com.example.vitality.databinding.HomeFragmentBinding;
+import com.example.vitality.retrofit.Weather;
 import com.example.vitality.viewmodel.SharedViewModel;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment{
 
     private SharedViewModel model;
     private HomeFragmentBinding addBinding;
@@ -30,6 +32,15 @@ public class HomeFragment extends Fragment {
 
         // Get the NavController
         NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment);
+
+        //add weather info
+        TextView textView = view.findViewById(R.id.text_message);
+        String weatherString = Weather.getWeatherString();
+
+        textView.setText(weatherString);
+//        textView.setText("test");
+//        textView.setText("test");
+
 
         // Add a click listener to the dietLogButton to navigate to the DietlogFragment
         Button dietLogButton = view.findViewById(R.id.dietLogButton);
@@ -103,6 +114,17 @@ public class HomeFragment extends Fragment {
 
         return view;
     }
+
+//    @Override
+//    public void onWeatherFetchCompleted(Weather weather) {
+//        TextView textView = getView().findViewById(R.id.text_message);
+//        String weatherString = weather.getWeatherString();
+//        if(weatherString == null) {
+//            textView.setText("Weather service not available");
+//
+//        }
+//        textView.setText("test");
+//    }
 
     @Override
     public void onDestroyView() {
