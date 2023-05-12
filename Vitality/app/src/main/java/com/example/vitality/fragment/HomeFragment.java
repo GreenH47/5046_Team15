@@ -204,7 +204,10 @@ public class HomeFragment extends Fragment   {
                                 + "Max Temperature: " + (int) temp_max + "°C\n"
                                 + "Description: " + description;
 
-                        addBinding.tempTextView.setText(weatherText);
+                        //addBinding.tempTextView.setText(weatherText);
+                        if(addBinding != null) {  // check if the binding is not null
+                            addBinding.tempTextView.setText(weatherText);
+                        }
                     }
 
                     @Override
