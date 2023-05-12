@@ -4,6 +4,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center">
+
+    <TextView
+        android:id="@+id/tempTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="TextView" />
+
     <TextView
         android:id="@+id/text_message"
         android:layout_width="match_parent"
