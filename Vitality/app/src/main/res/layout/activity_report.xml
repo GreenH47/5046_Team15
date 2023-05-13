@@ -2,21 +2,124 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
     android:orientation="vertical"
     >
-
-    <com.github.mikephil.charting.charts.BarChart
-        android:id="@+id/barChart"
+    <!-- from date -->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal">
 
-        />
+        <TextView
+            style="@style/TextViewKey"
+            android:text="From Date" />
 
+        <TextView
+            android:id="@+id/fromDate"
+            style="@style/editTextStyle"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:hint="select date" />
+
+
+    </LinearLayout>
+
+    <!-- to date -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/TextViewKey"
+            android:text="TO Date" />
+
+        <TextView
+            android:id="@+id/toDate"
+            style="@style/editTextStyle"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:hint="select date" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal">
+
+
+        <!-- bar chart -->
+        <Button
+            android:id="@+id/generate_bar_chart_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Create Bar Chart"
+            android:layout_gravity="center_horizontal"/>
+
+        <!-- pie chart -->
+        <Button
+            android:id="@+id/generate_pie_chart_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Create Pie Chart"
+            android:layout_gravity="center_horizontal"/>
+    </LinearLayout>
 
     <Button
         android:id="@+id/returnButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Return to Home Screen"/>
+        android:text="Return to Home Screen"
+        android:layout_gravity="center_horizontal"/>
+
+    <TextView
+        android:id="@+id/testtext"
+        style="@style/editTextStyle"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        />
+
+
+    <!-- This is the container for the bar chart -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <!-- Bar chart view -->
+        <com.github.mikephil.charting.charts.BarChart
+            android:id="@+id/barChart"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <!-- Add any other views here that should appear below the bar chart -->
+
+    </LinearLayout>
+
+    <!-- This is the container for the pie chart -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <!-- Pie chart view (initially hidden) -->
+        <com.github.mikephil.charting.charts.PieChart
+            android:id="@+id/pieChart"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
+
+        <!-- Add any other views here that should appear below the pie chart -->
+
+    </LinearLayout>
+
+
+
 </LinearLayout>

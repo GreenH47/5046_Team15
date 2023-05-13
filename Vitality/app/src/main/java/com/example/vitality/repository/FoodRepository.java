@@ -76,6 +76,11 @@ public class FoodRepository {
         return foodDao.getFoodByDate(date);
     }
 
+    // method to get food between two dates
+    public LiveData<List<Food>> getFoodBetweenDates(String startDate, String endDate) {
+        return foodDao.getFoodBetweenDates(startDate, endDate);
+    }
+
     // method to get a food by its id asynchronously
     // then return a CompletableFuture object
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -89,4 +94,8 @@ public class FoodRepository {
             }
         }, FoodDatabase.databaseWriteExecutor);
     }
+
+    // get food data between two dates
+
+
 }

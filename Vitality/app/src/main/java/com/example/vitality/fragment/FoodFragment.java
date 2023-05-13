@@ -85,22 +85,22 @@ public class FoodFragment extends Fragment {
 
         // Define a map to store food calories
         map = new HashMap<>();
-        map.put("米饭", 1.1f);
-        map.put("肉类", 5f);
-        map.put("鱼肉", 0.6f);
-        map.put("蔬菜", 0.6f);
-        map.put("蛋糕", 2f);
-        map.put("饮料", 1.5f);
+        map.put("Rice", 1.1f);
+        map.put("Meat", 5f);
+        map.put("Fish", 0.6f);
+        map.put("Vegetable", 0.6f);
+        map.put("Cake", 2f);
+        map.put("Drinks", 1.5f);
 
         // Set up the spinner with a list of food items
         AppCompatSpinner spinner = view.findViewById(R.id.spinner);
         List<String> list = new ArrayList<>();
-        list.add("米饭");
-        list.add("肉类");
-        list.add("鱼肉");
-        list.add("蔬菜");
-        list.add("蛋糕");
-        list.add("饮料");
+        list.add("Rice");
+        list.add("Meat");
+        list.add("Fish");
+        list.add("Vegetable");
+        list.add("Cake");
+        list.add("Drinks");
         SimpleSpinnerAdapter adapter = new SimpleSpinnerAdapter(requireContext(), list);
         spinner.setAdapter(adapter);
 

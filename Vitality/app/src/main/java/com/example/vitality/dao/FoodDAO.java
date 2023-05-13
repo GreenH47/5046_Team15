@@ -37,6 +37,18 @@ public interface FoodDAO {
     @Query("DELETE FROM foods")
     void deleteAll();
 
+    // Query to check the date range of all food
+    @Query("SELECT MIN(date) || ' - ' || MAX(date) FROM foods")
+    String getDateRange();
+
+    // return all food between selected dates
+    @Query("SELECT * FROM foods WHERE date BETWEEN :startDate AND :endDate")
+    LiveData<List<Food>> getFoodBetweenDates(String startDate, String endDate);
+
+
+
+
+
 
 
 
