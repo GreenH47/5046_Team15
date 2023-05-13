@@ -37,6 +37,8 @@ public class HomeFragment extends Fragment   {
     private HomeFragmentBinding addBinding;
     private TextView textView;
 
+    private long lastApiRequestTime = 0;
+
     public HomeFragment(){}
 
     @Override
@@ -128,94 +130,73 @@ public class HomeFragment extends Fragment   {
             }
         });
 
-
-        double latitude;
-        double longitude;
+//        double latitude;
+//        double longitude;
 
         final double[] locationValues = new double[2];
         LocationManager locationManager;
         LocationListener locationListener;
 
-        //location
-        //locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
 
-
-//        locationListener = new LocationListener() {
-//            @Override
-//            public void onLocationChanged(Location location) {
-//                //Log.d("Location", location.toString());
-//                // location.getLatitude() and location.getLongitude() will give you the current latitude and longitude.
-//
-////                double latitude = location.getLatitude();
-////                double longitude = location.getLongitude();
-//                //latitude = location.getLatitude();
-//                locationValues[0] = location.getLatitude();
-//                locationValues[1] = location.getLongitude();
-//
-//
-//            }
-//
-//            @Override
-//            public void onStatusChanged(String provider, int status, Bundle extras) {}
-//
-//            @Override
-//            public void onProviderEnabled(String provider) {}
-//
-//            @Override
-//            public void onProviderDisabled(String provider) {}
-//        };
         locationListener = new LocationListener() {
+
             @Override
             public void onLocationChanged(Location location) {
                 locationValues[0] = location.getLatitude();
                 locationValues[1] = location.getLongitude();
 
-                // 在这里获取天气
-                Retrofit retrofit = new Retrofit.Builder()
-                        .baseUrl("https://api.openweathermap.org/data/2.5/")
-                        .addConverterFactory(GsonConverterFactory.create())
-                        .build();
+                // 获取当前时间
+                long currentTime = System.currentTimeMillis();
 
-                WeatherApiInterface weatherApiInterface = retrofit.create(WeatherApiInterface.class);
+                // 检查是否已经过了足够的时间
+                if (currentTime - lastApiRequestTime > 3000) {  // 每隔3s发送一次请求
+                    lastApiRequestTime = currentTime;  // 更新上次请求时间
 
-                String appId = "714216b5d55e9f8932359accb29635a1"; // 你的appid
+                    // 在这里获取天气
+                    Retrofit retrofit = new Retrofit.Builder()
+                            .baseUrl("https://api.openweathermap.org/data/2.5/")
+                            .addConverterFactory(GsonConverterFactory.create())
+                            .build();
 
-                weatherApiInterface.getWeather(locationValues[0], locationValues[1], appId);
+                    WeatherApiInterface weatherApiInterface = retrofit.create(WeatherApiInterface.class);
 
-                Call<Root> call = weatherApiInterface.getWeather(locationValues[0], locationValues[1], appId);
-                call.enqueue(new Callback<Root>() {
-                    @Override
-                    public void onResponse(Call<Root> call, Response<Root> response) {
-                        Root root = response.body();
-                        System.out.println();
-                        double temp = root.getMain().getTemp()-273.15;
-                        //kelvin to celsius  celsius = kelvin - 273.15
+                    String appId = "8c641d73139b712b4ae02e7774f3391c"; // 使用的appid
 
-                        double temp_min = root.getMain().getTemp()-273.15;
-                        double temp_max = root.getMain().getTemp()-273.15;
+                    Call<Root> call = weatherApiInterface.getWeather(locationValues[0], locationValues[1], appId);
+                    call.enqueue(new Callback<Root>() {
+                        @Override
+                        public void onResponse(Call<Root> call, Response<Root> response) {
+                            Root root = response.body();
+                            System.out.println();
+                            double temp = root.getMain().getTemp()-273.15;
+                            //kelvin to celsius  celsius = kelvin - 273.15
 
-                        String description = root.weather.get(0).description;
-                        String name = root.name;
+                            double temp_min = root.getMain().getTemp()-273.15;
+                            double temp_max = root.getMain().getTemp()-273.15;
 
-                        String weatherText = "name: " + name
-                                + "Temperature: " + (int) temp + "°C\n"
-                                + "Min Temperature: " + (int) temp_min + "°C\n"
-                                + "Max Temperature: " + (int) temp_max + "°C\n"
-                                + "Description: " + description;
+                            String description = root.weather.get(0).description;
+                            String name = root.name;
 
-                        //addBinding.tempTextView.setText(weatherText);
-                        if(addBinding != null) {  // check if the binding is not null
-                            addBinding.tempTextView.setText(weatherText);
+                            String weatherText = "name: " + name
+                                    + "Temperature: " + (int) temp + "°C\n"
+                                    + "Min Temperature: " + (int) temp_min + "°C\n"
+                                    + "Max Temperature: " + (int) temp_max + "°C\n"
+                                    + "Description: " + description;
+
+                            if(addBinding != null) {  // check if the binding is not null
+                                addBinding.tempTextView.setText(weatherText);
+                            }
                         }
-                    }
 
-                    @Override
-                    public void onFailure(Call<Root> call, Throwable t) {
-                        System.out.println(t.getMessage());
-                    }
-                });
+                        @Override
+                        public void onFailure(Call<Root> call, Throwable t) {
+                            System.out.println(t.getMessage());
+                        }
+                    });
+                }
             }
+
 
             @Override
             public void onStatusChanged(String provider, int status, Bundle extras) {}
