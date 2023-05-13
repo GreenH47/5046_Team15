@@ -1,6 +1,9 @@
 package com.example.vitality.fragment;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,10 +44,44 @@ public class FoodFragment extends Fragment {
     private Map<String, Float> map;
     private float calorie = -1f;
 
+    private FragmentFoodBinding binding;
+    private FoodViewModel foodViewModel;
+    public FoodFragment() {
+    }
+
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         // Inflate the fragment_food layout and set it as the view for this fragment
-        View view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_food, container, false);
+        //View view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_food, container, false);
+        binding = FragmentFoodBinding.inflate(inflater, container, false);
+        View view = binding.getRoot();
+        SharedViewModel sharemodel = new ViewModelProvider(getActivity()).get(SharedViewModel.class);
+
+        // get the ViewModel instance using AndroidViewModelFactory with the Application context
+        foodViewModel = ViewModelProvider.AndroidViewModelFactory.getInstance(getActivity().getApplication()).create(FoodViewModel.class);
+
+        // observe all food in the database using LiveData and update the UI when there is a change
+        foodViewModel.getAllFoods().observe(getActivity(), new Observer<List<Food>>() {
+            @Override
+            public void onChanged(@NonNull final List<Food> food) {
+                // Create a string to hold all the food details
+                String allFood = "";
+                // Loop through each food and add their details to the string
+                for (Food temp : food) {
+                    String daymessage = "Day number: " + temp.date;
+                    String foodMessage = "Food today: " + temp.foodName;
+                    String foodIntake = "Food intake: " + temp.foodIntake;
+                    String foodCalories = "Food calories: " + temp.calories;
+                    String combinedMessage = daymessage + "\n" + foodMessage + "\n" + foodIntake + "\n" + foodCalories;
+                    //String combinedMessage = daymessage + "\n" + foodMessage;
+                    String foodDetails = (combinedMessage);
+                    allFood = allFood + System.getProperty("line.separator") + foodDetails;
+                }
+                // Set the text of the text view to show all the food details
+                binding.textViewRead.setText("All Food data: " + allFood);
+            }
+        });
 
         // Define a map to store food calories
         map = new HashMap<>();
@@ -92,22 +129,98 @@ public class FoodFragment extends Fragment {
         });
 
         // Calculate the calorie intake and display it in the UI
-        view.findViewById(R.id.btnGenerate).setOnClickListener(new View.OnClickListener() {
+//        view.findViewById(R.id.btnGenerate).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                String duration = etIntake.getText().toString().trim();
+//                int d = -1;
+//                try {
+//                    d = Integer.parseInt(duration);
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//                if (d < 0 || calorie < 0) {
+//                    Toast.makeText(getContext(), "data error", Toast.LENGTH_SHORT).show();
+//                    return;
+//                }
+//
+//                tvGenerate.setText("" + d * calorie);
+//            }
+//        });
+
+        etIntake.addTextChangedListener(new TextWatcher() {
             @Override
-            public void onClick(View v) {
-                String duration = etIntake.getText().toString().trim();
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) { }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String duration = s.toString().trim();
                 int d = -1;
                 try {
                     d = Integer.parseInt(duration);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                if (d < 0 || calorie < 0) {
-                    Toast.makeText(getContext(), "data error", Toast.LENGTH_SHORT).show();
+                if (d >= 0 && calorie >= 0) {
+                    float totalCalories = d * calorie;
+                    tvGenerate.setText(String.valueOf(totalCalories));
+                }
+            }
+        });
+
+
+        // Save the food details to the database
+        view.findViewById(R.id.addButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // get user input from text fields
+                String foodName = binding.spinner.getSelectedItem().toString();
+                float foodIntake = Float.parseFloat(etIntake.getText().toString().trim());
+                float calories = Float.parseFloat(tvGenerate.getText().toString().trim());
+                String date = tvSelTime.getText().toString().trim();
+
+                // check if any of the fields are empty
+                if (TextUtils.isEmpty(foodName) || TextUtils.isEmpty(etIntake.getText().toString().trim()) || TextUtils.isEmpty(tvGenerate.getText().toString().trim()) || TextUtils.isEmpty(date)) {
+                    Toast.makeText(getContext(), "Please fill in all the fields", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                tvGenerate.setText("" + d * calorie);
+                // create a new food object
+                Food food = new Food(foodName, foodIntake, calories, date);
+                // add the food to the database
+                foodViewModel.insert(food);
+                String message = "Food added: days: " + date + " food: " + foodName + " intake: " + foodIntake + "g calories: " + calories + "kcal";
+                // display a toast message to show that the food has been added to the database
+                // Toast.makeText(getContext(), "Food added", Toast.LENGTH_SHORT).show();
+                binding.textViewRead.setText(message);
+
+                sharemodel.setMessage(message);
+            }
+        });
+
+        // delete all food from the database
+        binding.deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                foodViewModel.deleteAll();
+                binding.textViewDelete.setText("All food deleted");
+                //Toast.makeText(getContext(), "All food deleted", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        //clear the text view
+        binding.clearButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                binding.spinner.setSelection(0);
+                etIntake.setText("");
+                tvGenerate.setText("");
+                tvSelTime.setText("");
+//                binding.textViewRead.setText("");
+//                binding.textViewDelete.setText("");
             }
         });
 

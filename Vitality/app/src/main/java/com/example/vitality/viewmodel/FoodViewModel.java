@@ -6,6 +6,7 @@ import android.os.Build;
 import androidx.annotation.RequiresApi;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.example.vitality.entity.Diet;
 import com.example.vitality.entity.Food;
@@ -20,6 +21,8 @@ public class FoodViewModel extends AndroidViewModel{
     private FoodRepository fRepository;
     //LiveData to hold a list of all foods in the database
     private LiveData<List<Food>> allFoods;
+
+    private MutableLiveData<String> mText;
 
     //constructor to initialize the repository and fetch all foods from the database
     public FoodViewModel (Application application) {
@@ -55,5 +58,7 @@ public class FoodViewModel extends AndroidViewModel{
         fRepository.deleteAll();
     }
 
-
+//    public void setMessage(String message) {
+//        mText.setValue(message);
+//    }
 }

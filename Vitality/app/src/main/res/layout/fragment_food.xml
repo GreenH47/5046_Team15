@@ -72,12 +72,7 @@
             android:layout_marginEnd="10dp"
             android:layout_weight="1" />
 
-        <Button
-            android:id="@+id/btnGenerate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="generate"
-            android:textAllCaps="false" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -109,17 +104,31 @@
         android:text="ADD To Data base"
         android:textAllCaps="false" />
 
+    <!-- TextView to display read data information from database -->
+    <TextView
+        android:id="@+id/textView_add"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white" />
+
     <Button
         android:id="@+id/deleteButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="DELETE Data"
+        android:text="DELETE ALL Data"
         android:textAllCaps="false" />
 
-    <Button
+    <TextView
+        android:id="@+id/textView_delete"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="UPDATE Data"
+        android:background="@color/white" />
+
+    <Button
+        android:id="@+id/clearButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="CLEAR Data"
         android:textAllCaps="false" />
 
     <Button
