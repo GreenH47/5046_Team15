@@ -12,12 +12,20 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatSpinner;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
-
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.vitality.R;
 import com.example.vitality.adapter.SimpleSpinnerAdapter;
+import com.example.vitality.databinding.FragmentFoodBinding;
+import com.example.vitality.entity.Diet;
+import com.example.vitality.entity.Food;
 import com.example.vitality.utils.DateTimeUtils;
+import com.example.vitality.viewmodel.DietViewModel;
+import com.example.vitality.viewmodel.FoodViewModel;
+import com.example.vitality.viewmodel.SharedViewModel;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,6 +34,7 @@ import java.util.Map;
 
 public class FoodFragment extends Fragment {
 
+    // Define necessary global variables
     private TextView tvSelTime;
     private TextView tvGenerate;
     private EditText etIntake;
@@ -33,14 +42,11 @@ public class FoodFragment extends Fragment {
     private float calorie = -1f;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        // Inflate the fragment_food layout and set it as the view for this fragment
         View view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_food, container, false);
-//        食物类型：
-//        米饭（1.1卡路里每克），
-//        肉类（5卡路里每克），
-//        鱼肉（0.6卡路里每克），
-//        蔬菜（0.6卡路里每克），
-//        蛋糕（2卡路里每克），
-//        饮料（1.5卡路里每克）
+
+        // Define a map to store food calories
         map = new HashMap<>();
         map.put("米饭", 1.1f);
         map.put("肉类", 5f);
@@ -49,46 +55,43 @@ public class FoodFragment extends Fragment {
         map.put("蛋糕", 2f);
         map.put("饮料", 1.5f);
 
-
+        // Set up the spinner with a list of food items
         AppCompatSpinner spinner = view.findViewById(R.id.spinner);
         List<String> list = new ArrayList<>();
-        //食物添加
         list.add("米饭");
         list.add("肉类");
         list.add("鱼肉");
         list.add("蔬菜");
         list.add("蛋糕");
         list.add("饮料");
-
-
         SimpleSpinnerAdapter adapter = new SimpleSpinnerAdapter(requireContext(), list);
         spinner.setAdapter(adapter);
 
+        // Set the calorie value based on the selected food item
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String item = list.get(position);
                 calorie = map.get(item);
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
             }
         });
 
+        // Set up the UI elements for selecting the time and generating the calorie intake
         etIntake = view.findViewById(R.id.etIntake);
         tvGenerate = view.findViewById(R.id.tvGenerate);
         tvSelTime = view.findViewById(R.id.tvSelTime);
         tvSelTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //日期和时间选择弹窗
+                // Display the date and time picker dialog
                 dateDialog();
             }
         });
 
-
+        // Calculate the calorie intake and display it in the UI
         view.findViewById(R.id.btnGenerate).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -108,12 +111,10 @@ public class FoodFragment extends Fragment {
             }
         });
 
-
-        view.findViewById(R.id.btnReturn).setOnClickListener(new View.OnClickListener() {
+        // Navigate back to the previous screen
+        view.findViewById(R.id.returnButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //返回上一级
-//                Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main).navigateUp();
                 Navigation.findNavController(view).navigateUp();
             }
         });
@@ -121,6 +122,7 @@ public class FoodFragment extends Fragment {
         return view;
     }
 
+    // Display the date and time picker dialog
     private void dateDialog() {
         DateTimeUtils.dateTimeDialog(requireContext(), new DateTimeUtils.OnDateTimeListener() {
             @Override

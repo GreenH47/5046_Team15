@@ -102,13 +102,15 @@
 
 
     <Button
+        android:id="@+id/addButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
-        android:text="APP To Data base"
+        android:text="ADD To Data base"
         android:textAllCaps="false" />
 
     <Button
+        android:id="@+id/deleteButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="DELETE Data"
@@ -121,11 +123,18 @@
         android:textAllCaps="false" />
 
     <Button
-        android:id="@+id/btnReturn"
+        android:id="@+id/returnButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="RETURN To Dashboard"
         android:textAllCaps="false" />
+
+    <!-- TextView to display read data information from database -->
+    <TextView
+        android:id="@+id/textView_read"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white" />
 
 
 </LinearLayout>
