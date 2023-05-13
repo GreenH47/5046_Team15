@@ -2,6 +2,7 @@ package com.example.vitality.fragment;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
@@ -18,12 +19,14 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import com.example.vitality.LoginActivity;
 import com.example.vitality.R;
 import com.example.vitality.databinding.HomeFragmentBinding;
 import com.example.vitality.retrofit.Weather;
 import com.example.vitality.viewmodel.SharedViewModel;
 import com.example.vitality.weather.Root;
 import com.example.vitality.weather.WeatherApiInterface;
+import com.google.firebase.auth.FirebaseAuth;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -217,6 +220,16 @@ public class HomeFragment extends Fragment   {
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
         }
         //location
+
+        //退出登录
+        Button signOutButton = view.findViewById(R.id.SignOut_button);
+        signOutButton.setOnClickListener(v -> {
+            FirebaseAuth.getInstance().signOut();
+            //调用firebase自带的signOut（）方法推出登录
+
+            startActivity(new Intent(getActivity(), LoginActivity.class));
+            //跳转至Login 界面
+        });
 
         return view;
     }
