@@ -7,17 +7,19 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
 import com.example.vitality.dao.DietDAO;
+import com.example.vitality.dao.ExerciseDao;
 import com.example.vitality.entity.Diet;
+import com.example.vitality.entity.ExerciseEntity;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {Diet.class}, version = 1, exportSchema = false)
+@Database(entities = {Diet.class, ExerciseEntity.class}, version = 1, exportSchema = false)
 public abstract class DietDatabase  extends RoomDatabase {
     // Abstract method to get the Data Access
     // Object interface for the Diet table
     public abstract DietDAO dietDao();
-
+    public abstract ExerciseDao exerciseDao();
     // A static DietDatabase INSTANCE for Singleton database operation
     //singleton pattern to prevent having multiple instances of the database created
     //and opened at the same time

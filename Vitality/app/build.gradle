@@ -37,11 +37,6 @@ android {
 }
 
 dependencies {
-
-    //workManager
-    def work_version = "2.7.1"
-    implementation "androidx.work:work-runtime:$work_version"
-
     //using the libraries from
     //Fragment, Navigation, ViewModel and LiveData
     implementation 'androidx.fragment:fragment:1.5.5'
@@ -52,7 +47,7 @@ dependencies {
 
 
     // Import the Firebase BoM
-    //implementation platform('com.google.firebase:firebase-bom:31.5.0')
+    implementation platform('com.google.firebase:firebase-bom:31.5.0')
 
 
     // TODO: Add the dependencies for Firebase products you want to use
@@ -97,6 +92,9 @@ dependencies {
     //facebook  16->11
     implementation 'com.facebook.android:facebook-share:16.0.1'
     implementation 'com.facebook.android:facebook-android-sdk:16.0.1'
+
+
+    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.4'
 
 
 

@@ -102,19 +102,22 @@
 
 
     <Button
+        android:id="@+id/btnAdd"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
-        android:text="APP To Data base"
+        android:text="ADD To Data base"
         android:textAllCaps="false" />
 
     <Button
+        android:id="@+id/btnDel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="DELETE Data"
         android:textAllCaps="false" />
 
     <Button
+        android:id="@+id/btnUpdate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="UPDATE Data"
@@ -126,6 +129,12 @@
         android:layout_height="wrap_content"
         android:text="RETURN To Dashboard"
         android:textAllCaps="false" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
 
 
 </LinearLayout>
