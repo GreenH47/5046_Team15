@@ -35,7 +35,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class HomeFragment extends Fragment   {
+public class HomeFragment extends Fragment   implements Weather.OnWeatherFetchCompletedListener{
 
     private SharedViewModel model;
     private HomeFragmentBinding addBinding;
@@ -61,7 +61,7 @@ public class HomeFragment extends Fragment   {
 //        textView.setText(weatherString);
         textView = view.findViewById(R.id.text_message);
 
-        //Weather.fetchWeather(this); // start fetching weather data
+        Weather.fetchWeather(this); // start fetching weather data
 
 
 
@@ -246,16 +246,16 @@ public class HomeFragment extends Fragment   {
     }
 
     //update weather info area
-//    @Override
-//    public void onWeatherFetchCompleted(Weather weather) {
-//        String weatherString = weather.getWeatherString(); // get formatted weather string
-//        textView.setText(weatherString); // update text view
-//    }
-//
-//    @Override
-//    public void onWeatherFetchFailed() {
-//        // Handle the failed weather fetch (e.g. show an error message, retry the fetch, etc.)
-//    }
+    @Override
+    public void onWeatherFetchCompleted(Weather weather) {
+        String weatherString = weather.getWeatherString(); // get formatted weather string
+        textView.setText(weatherString); // update text view
+    }
+
+    @Override
+    public void onWeatherFetchFailed() {
+        // Handle the failed weather fetch (e.g. show an error message, retry the fetch, etc.)
+    }
 
     @Override
     public void onDestroyView() {
