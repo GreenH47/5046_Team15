@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -15,7 +16,6 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import com.example.vitality.R;
-import com.example.vitality.adapter.SimpleSpinnerAdapter;
 import com.example.vitality.utils.DateTimeUtils;
 
 import java.util.ArrayList;
@@ -36,31 +36,26 @@ public class ExerciseFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_exercise, container, false);
         map = new HashMap<>();
-//        运动类型：
-//        跑步（每分钟11卡路里），
-//        跳绳（每分钟10卡路里），
-//        羽毛球（每分钟7卡路里），
-//        骑行（每分钟10卡路里），
-//        健身操（每分钟8卡路里）
-        map.put("跑步", 11);
-        map.put("跳绳", 10);
-        map.put("羽毛球", 7);
-        map.put("骑行", 10);
-        map.put("健身操", 8);
+
+        map.put("run", 11);
+        map.put("Jump rope", 10);
+        map.put("badminton", 7);
+        map.put("cycling", 10);
+        map.put("aerobics", 8);
 
 
         AppCompatSpinner spinner = view.findViewById(R.id.spinner);
         List<String> list = new ArrayList<>();
-        //添加运动类型
-        list.add("跑步");
-        list.add("跳绳");
-        list.add("羽毛球");
-        list.add("骑行");
-        list.add("健身操");
+
+        list.add("run");
+        list.add("Jump rope");
+        list.add("badminton");
+        list.add("cycling");
+        list.add("aerobics");
 
 
-        SimpleSpinnerAdapter adapter = new SimpleSpinnerAdapter(requireContext(), list);
-        spinner.setAdapter(adapter);
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(requireActivity(), android.R.layout.simple_spinner_item, list);
+        spinner.setAdapter(arrayAdapter);
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -82,7 +77,6 @@ public class ExerciseFragment extends Fragment {
         tvSelTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //日期和时间选择弹窗
                 dateDialog();
             }
         });
@@ -111,7 +105,6 @@ public class ExerciseFragment extends Fragment {
         view.findViewById(R.id.btnReturn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //返回上一级
                 Navigation.findNavController(view).navigateUp();
             }
         });

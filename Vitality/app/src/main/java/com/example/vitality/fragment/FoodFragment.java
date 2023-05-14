@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,7 +22,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.vitality.R;
-import com.example.vitality.adapter.SimpleSpinnerAdapter;
+//import com.example.vitality.adapter.SimpleSpinnerAdapter;
 import com.example.vitality.databinding.FragmentFoodBinding;
 import com.example.vitality.entity.Diet;
 import com.example.vitality.entity.Food;
@@ -101,8 +102,9 @@ public class FoodFragment extends Fragment {
         list.add("Vegetable");
         list.add("Cake");
         list.add("Drinks");
-        SimpleSpinnerAdapter adapter = new SimpleSpinnerAdapter(requireContext(), list);
-        spinner.setAdapter(adapter);
+
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(requireActivity(), android.R.layout.simple_spinner_item, list);
+        spinner.setAdapter(arrayAdapter);
 
         // Set the calorie value based on the selected food item
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
