@@ -104,7 +104,18 @@
         android:text="Facebook"
         android:layout_below="@id/SignOut_button"
         android:layout_alignStart="@id/SignOut_button"
-        android:layout_marginTop="20dp"/>
+
+        />
+
+    <Button
+        android:id="@+id/startWorkButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="startWorkButton"
+        android:layout_below="@id/facebookButton"
+        android:layout_alignStart="@id/facebookButton"
+
+        />
 
 
 </LinearLayout>

@@ -9,6 +9,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,8 +20,12 @@ import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.work.PeriodicWorkRequest;
+import androidx.work.WorkManager;
 
 import com.example.vitality.LoginActivity;
+import com.example.vitality.MainActivity;
+import com.example.vitality.MyWorker;
 import com.example.vitality.R;
 import com.example.vitality.databinding.HomeFragmentBinding;
 import com.example.vitality.retrofit.Weather;
@@ -28,6 +33,8 @@ import com.example.vitality.viewmodel.SharedViewModel;
 import com.example.vitality.weather.Root;
 import com.example.vitality.weather.WeatherApiInterface;
 import com.google.firebase.auth.FirebaseAuth;
+
+import java.util.concurrent.TimeUnit;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -239,6 +246,21 @@ public class HomeFragment extends Fragment   implements Weather.OnWeatherFetchCo
             }
         });
 
+        //workManager
+        Button startWorkButton = view.findViewById(R.id.startWorkButton);
+        startWorkButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PeriodicWorkRequest myWorkRequest =
+                        new PeriodicWorkRequest.Builder(MyWorker.class, 24, TimeUnit.HOURS)
+                                .build();
+
+                WorkManager.getInstance(getActivity()).enqueue(myWorkRequest);
+
+                Log.d("MainActivity", "onClick: Work started");
+            }
+        });
+        //workManager
 
         return view;
     }
