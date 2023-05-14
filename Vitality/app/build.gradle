@@ -89,6 +89,10 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics'
     implementation 'com.google.firebase:firebase-auth:21.0.3'
 
+    //facebook  16->11
+    implementation 'com.facebook.android:facebook-share:16.0.1'
+    implementation 'com.facebook.android:facebook-android-sdk:16.0.1'
+
 
 
 

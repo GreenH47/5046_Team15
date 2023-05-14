@@ -83,5 +83,13 @@
         app:destination="@+id/nav_retrofit_fragment" />
 
 
+    <!--to facebook page-->
+    <fragment
+        android:id="@+id/nav_facebook_fragment"
+        android:name="com.example.vitality.fragment.FacebookFragment"
+        android:label="Facebook Fragment" >
+        <!-- 如果有需要，可以在这里添加 <action> 或者 <argument> 标签 -->
+    </fragment>
+
 
 </navigation>

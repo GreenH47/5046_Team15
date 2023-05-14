@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -230,6 +231,16 @@ public class HomeFragment extends Fragment   {
             startActivity(new Intent(getActivity(), LoginActivity.class));
             //跳转至Login 界面
         });
+
+
+        Button facebookButton = view.findViewById(R.id.facebookButton);
+        facebookButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navController.navigate(R.id.nav_facebook_fragment);
+            }
+        });
+
 
         return view;
     }
