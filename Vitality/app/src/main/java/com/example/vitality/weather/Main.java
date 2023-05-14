@@ -18,12 +18,7 @@ public class Main extends Root{
         this.temp = temp;
     }
 
-
-    public double getTemp_min() {
-        return temp_min;
-    }
-
-    public double getTemp_max() {
-        return temp_max;
+    public int getHumidity() {
+        return humidity;
     }
 }

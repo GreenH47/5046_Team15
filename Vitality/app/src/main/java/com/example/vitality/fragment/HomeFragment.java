@@ -176,16 +176,14 @@ public class HomeFragment extends Fragment   implements Weather.OnWeatherFetchCo
                             double temp = root.getMain().getTemp()-273.15;
                             //kelvin to celsius  celsius = kelvin - 273.15
 
-                            double temp_min = root.getMain().getTemp()-273.15;
-                            double temp_max = root.getMain().getTemp()-273.15;
+                            int humidity = root.getMain().getHumidity();
 
                             String description = root.weather.get(0).description;
                             String name = root.name;
 
-                            String weatherText = "name: " + name
+                            String weatherText = "name: " + name + "\n"
                                     + "Temperature: " + (int) temp + "°C\n"
-                                    + "Min Temperature: " + (int) temp_min + "°C\n"
-                                    + "Max Temperature: " + (int) temp_max + "°C\n"
+                                    + "Humidity: " +  humidity + "%\n"
                                     + "Description: " + description;
 
                             if(addBinding != null) {  // check if the binding is not null
