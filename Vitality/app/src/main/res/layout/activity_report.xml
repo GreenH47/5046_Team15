@@ -82,43 +82,32 @@
         style="@style/editTextStyle"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
+        android:visibility="gone"
         />
 
 
-    <!-- This is the container for the bar chart -->
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:orientation="vertical">
 
-        <!-- Bar chart view -->
-        <com.github.mikephil.charting.charts.BarChart
-            android:id="@+id/barChart"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
 
-        <!-- Add any other views here that should appear below the bar chart -->
+    <!-- Bar chart view (initially hidden)-->
+    <com.github.mikephil.charting.charts.BarChart
+        android:id="@+id/barChart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        />
 
-    </LinearLayout>
 
-    <!-- This is the container for the pie chart -->
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:orientation="vertical">
 
-        <!-- Pie chart view (initially hidden) -->
-        <com.github.mikephil.charting.charts.PieChart
-            android:id="@+id/pieChart"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone"/>
+    <!-- Pie chart view (initially hidden) -->
+    <com.github.mikephil.charting.charts.PieChart
+        android:id="@+id/pieChart"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
 
-        <!-- Add any other views here that should appear below the pie chart -->
+        android:visibility="gone"
+        />
 
-    </LinearLayout>
+
 
 
 

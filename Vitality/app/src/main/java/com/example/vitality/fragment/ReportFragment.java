@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,12 +28,14 @@ import com.example.vitality.viewmodel.FoodViewModel;
 import com.example.vitality.viewmodel.SharedViewModel;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
@@ -64,12 +67,6 @@ public class ReportFragment extends Fragment{
 
         foodViewModel = new ViewModelProvider(this).get(FoodViewModel.class);
 
-        //chart = view.findViewById(R.id.chart);
-        //binding the chart
-        //chart = binding.chart;
-
-        // Get a reference to the foodViewModel
-        //foodViewModel = new ViewModelProvider(requireActivity()).get(FoodViewModel.class);
         //binding the chart to the view
         pieChart = binding.pieChart;
         barChart = binding.barChart;
@@ -80,7 +77,6 @@ public class ReportFragment extends Fragment{
             @Override
             public void onClick(View view) {
                 // Display the date and time picker dialog
-                //dateDialog();
                 DateTimeUtils.dateTimeDialog(requireContext(), new DateTimeUtils.OnDateTimeListener() {
                     @Override
                     public void onDateTime(String dateTime) {
@@ -105,10 +101,11 @@ public class ReportFragment extends Fragment{
 
 
 
-        // create a new pie chart based on food data
+        // create a new bar chart based on food data
         binding.generateBarChartButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                testarea.setVisibility(View.GONE);
                 //hide pie chart and show bar chart
                 pieChart.setVisibility(View.GONE);
                 barChart.setVisibility(View.VISIBLE);
@@ -132,65 +129,109 @@ public class ReportFragment extends Fragment{
 
                 foodViewModel.getFoodBetweenDates(FromDate,ToDate).observe(getViewLifecycleOwner(), new Observer<List<Food>>() {
                     @Override
-                    public void onChanged(List<Food> foods) {
-                        // if no food data is found, display an error message to the user
-                        if (foods == null || foods.isEmpty()) {
-                            String message1 = "No food data found between " + FromDate + " and " + ToDate;
-                            final String message2 = "";
-                            foodViewModel.getDataRange().observe(getViewLifecycleOwner(), new Observer<String>() {
-                                @Override
-                                public void onChanged(String dateRange) {
-                                    String updatedMessage2 = message2 + dateRange;
+                    public void onChanged(List<Food> foodList) {
+                        // if food db is empty, display an error message to the user
+//                        if (foodList == null || foodList.isEmpty()) {
+//                            String message1 = "Food database is empty";
+//                            Toast.makeText(getContext(), message1, Toast.LENGTH_SHORT).show();
+//                            return;
+//                        }
 
-                                    String message = message1 + "\nDate range: " + updatedMessage2;
-                                    Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
-                                }
-                            });
+                        // if no food data is found, display an error message to the user
+                        //foodList = foodViewModel.getFoodBetweenDates(FromDate,ToDate).getValue();
+                        if (foodList == null || foodList.isEmpty()) {
+                            String message1 = "No food data found between " + FromDate + " and " + ToDate;
+                            Toast.makeText(getContext(), message1, Toast.LENGTH_SHORT).show();
                             return;
                         }
 
-                        String foodtest = "";
-                        float totalCalories = 0;
+                        String allFood = "";
+                        // Loop through each food and add their details to the string
+                        for (Food temp : foodList) {
+                            String foodName = "Food name: " + temp.foodName;
+                            String foodCalories = "Food calories: " + temp.calories;
+                            String foodDate = "Food date: " + temp.date;
+                            String combinedMessage = foodName + "\n" + foodCalories + "\n" + foodDate;
+                            String foodDetails = (combinedMessage);
+                            allFood = allFood + System.getProperty("line.separator") + foodDetails;
+                        }
+
+                        //testarea to check if the food data is working
+                        testarea.setVisibility(View.VISIBLE);
+                        testarea.setText(allFood.toString());
+
                         // get the food data with names and calories use map
-                        Map<String, Float> foodNameCaloriesMap = new HashMap<>();
-                        for (Food food : foods) {
+                        HashMap<String, Float> foodTotals = new HashMap<>();
+
+                        for (Food food : foodList) {
                             String foodName = food.getFoodName();
                             float calories = food.getCalories();
-                            if (foodNameCaloriesMap.containsKey(foodName)) {
-                                foodtest += foodName;
-                                calories += foodNameCaloriesMap.get(foodName);
+
+                            if (foodTotals.containsKey(foodName)) {
+                                foodTotals.put(foodName, foodTotals.get(foodName) + calories);
+                            } else {
+                                foodTotals.put(foodName, calories);
                             }
-                            foodNameCaloriesMap.put(foodName, calories);
                         }
 
-                        testarea.setText(foodtest);
+                        //testarea to check if the hashmap is working
+                        //testarea.setText(foodTotals.toString());
 
-
-                        List<BarEntry> entries = new ArrayList<>();
-                        int i = 0;
-                        for (Map.Entry<String, Float> entry : foodNameCaloriesMap.entrySet()) {
-                            entries.add(new BarEntry(i++, entry.getValue(), entry.getKey()));
-                        }
-                        BarDataSet dataSet = new BarDataSet(entries, "Food Name and Calories");
-                        BarData barData = new BarData(dataSet);
+                        // create an empty BarData object with the X-axis label as "Food Name" and the Y-axis label as "Total Calories"
+                        BarData barData = new BarData(new BarDataSet(new ArrayList<>(), "Food Name"));
                         barChart.setData(barData);
-                        barChart.invalidate();
+
+                        // let the chart animate and display its legend
+                        barChart.animateY(2000);
+                        barChart.getLegend().setEnabled(true);
+                        barData.setBarWidth(1.0f);
+                        // set the layoutParams of the barChart view
+                        barChart.setLayoutParams(new LinearLayout.LayoutParams(
+                                LinearLayout.LayoutParams.MATCH_PARENT, 600));
 
 
+                        // customize the X-axis labels
+                        XAxis xAxis = barChart.getXAxis();
+                        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+                        xAxis.setDrawGridLines(false);
+
+                        // create an array of String to hold the food names
+                        String[] foodNames = new String[foodTotals.size()];
+
+                        // loop through each foodName and its corresponding total calories and add it to the entries list and food names array
+                        List<BarEntry> entries = new ArrayList<>();
+                        int index = 0;
+
+                        for (Map.Entry<String, Float> entry : foodTotals.entrySet()) {
+                            float totalCalories = entry.getValue();
+                            String foodName = entry.getKey();
+                            entries.add(new BarEntry(index++, totalCalories));
+                            foodNames[index-1] = foodName;
+                        }
+
+                        // testarea to check if the entries are working
+                        //testarea.setText(entries.toString());
+
+
+
+                        // set the X-axis labels using the food names array
+                        xAxis.setValueFormatter(new IndexAxisValueFormatter(foodNames));
+
+
+                        BarDataSet barDataSet = new BarDataSet(entries, "Total Calories");
+                        barDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
+                        BarData data = new BarData(barDataSet);
+                        barChart.setData(data);
                     }
                 });
-
-//
-
-
-
-
             }
         });
 
+        // create a new pie chart based on food data
         binding.generatePieChartButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                testarea.setVisibility(View.GONE);
                 //hide bar chart and show pie chart
                 barChart.setVisibility(View.GONE);
                 pieChart.setVisibility(View.VISIBLE);
@@ -212,49 +253,84 @@ public class ReportFragment extends Fragment{
                     return;
                 }
 
-                // get the food data from the database using getFoodBetweenDates
-                LiveData<List<Food>> filteredFoods = foodViewModel.getFoodBetweenDates(FromDate, ToDate);
+                foodViewModel.getFoodBetweenDates(FromDate,ToDate).observe(getViewLifecycleOwner(), new Observer<List<Food>>() {
+                    @Override
+                    public void onChanged(List<Food> foodList) {
 
-                // if no food data is found, display an error message to the user
-                // if no food data is found, display an error message to the user
-                if (filteredFoods.getValue().isEmpty()) {
-                    String message1 = "No food data found between " + FromDate + " and " + ToDate;
-                    final String message2 = "";
-                    foodViewModel.getDataRange().observe(getViewLifecycleOwner(), new Observer<String>() {
-                        @Override
-                        public void onChanged(String dateRange) {
-                            String updatedMessage2 = message2 + dateRange;
 
-                            String message = message1 + "\nDate range: " + updatedMessage2;
-                            Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+                        // if no food data is found, display an error message to the user
+                        //foodList = foodViewModel.getFoodBetweenDates(FromDate,ToDate).getValue();
+                        if (foodList == null || foodList.isEmpty()) {
+                            String message1 = "No food data found between " + FromDate + " and " + ToDate;
+                            Toast.makeText(getContext(), message1, Toast.LENGTH_SHORT).show();
+                            return;
                         }
-                    });
-                    return;
-                }
+
+                        String allFood = "";
+                        // Loop through each food and add their details to the string
+                        for (Food temp : foodList) {
+                            String foodName = "Food name: " + temp.foodName;
+                            String foodCalories = "Food calories: " + temp.calories;
+                            String foodDate = "Food date: " + temp.date;
+                            String combinedMessage = foodName + "\n" + foodCalories + "\n" + foodDate;
+                            String foodDetails = (combinedMessage);
+                            allFood = allFood + System.getProperty("line.separator") + foodDetails;
+                        }
+
+                        //testarea to check if the food data is working
+                        testarea.setVisibility(View.VISIBLE);
+                        testarea.setText(allFood.toString());
 
 
-                // Initialize the calorie totals map with empty values
-                Map<String, Float> calorieTotals = new HashMap<>();
-                calorieTotals.put("Rice", 0f);
-                calorieTotals.put("Meat", 0f);
-                calorieTotals.put("Fish", 0f);
-                calorieTotals.put("Vegetable", 0f);
-                calorieTotals.put("Cake", 0f);
-                calorieTotals.put("Drinks", 0f);
+                        // get the food data with names and calories use map
+                        HashMap<String, Integer> foodTotals = new HashMap<>();
 
-                for (Food food : filteredFoods.getValue()) {
-                    String foodName = food.getFoodName();
-                    Float calorieTotal = calorieTotals.get(foodName);
-                    calorieTotal += food.getCalories();
-                    calorieTotals.put(foodName, calorieTotal);
-                }
+                        for (Food food : foodList) {
+                            String foodName = food.getFoodName();
+                            // float calories to int calories
+                            int calories = Math.round(food.getCalories());
 
 
-                // create a new bar chart based on the total calories of each kinds of foodName
+                            if (foodTotals.containsKey(foodName)) {
+                                foodTotals.put(foodName, foodTotals.get(foodName) + calories);
+                            } else {
+                                foodTotals.put(foodName, calories);
+                            }
+                        }
 
+                        //testarea.setText(foodTotals.toString());
 
 
 
+                        // let the chart animate and display its legend
+                        pieChart.animateY(2000);
+                        pieChart.getLegend().setEnabled(true);
+
+
+                        ArrayList<PieEntry> pieEntries = new ArrayList<>();
+                        String label = "type";
+
+                        //input data and fit data into pie chart entry
+                        for(String type: foodTotals.keySet()){
+                            pieEntries.add(new PieEntry(foodTotals.get(type).floatValue(), type));
+                        }
+
+                        //collecting the entries with label name
+                        PieDataSet pieDataSet = new PieDataSet(pieEntries,label);
+                        //setting text size of the value
+                        pieDataSet.setValueTextSize(12f);
+
+                        pieDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
+
+                        //grouping the data set from entry to chart
+                        PieData pieData = new PieData(pieDataSet);
+                        //showing the value of the entries, default true if not set
+                        pieData.setDrawValues(true);
+
+                        pieChart.setData(pieData);
+
+                    }
+                });
             }
         });
 
@@ -270,21 +346,14 @@ public class ReportFragment extends Fragment{
         return view;
     }
 
-//    // Display the date and time picker dialog
-//    private void dateDialog() {
-//        DateTimeUtils.dateTimeDialog(requireContext(), new DateTimeUtils.OnDateTimeListener() {
-//            @Override
-//            public void onDateTime(String dateTime) {
-//                tvSelTime.setText(dateTime);
-//            }
-//        });
-//    }
+
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
         barChart = null;
+        pieChart = null;
     }
 
 }
